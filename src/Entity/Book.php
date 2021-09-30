@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Dto\Book\BookDto;
 use App\Repository\BookRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -104,6 +105,17 @@ class Book
     public function setAuthor(Author $author): self
     {
         $this->author = $author;
+
+        return $this;
+    }
+
+    public function setDataFromDto(BookDto $dto): self
+    {
+        $this->isbn = $dto->isbn;
+        $this->name = $dto->name;
+        $this->publicationDate = $dto->publicationDate;
+        $this->country = $dto->country;
+        $this->genre = $dto->genre;
 
         return $this;
     }

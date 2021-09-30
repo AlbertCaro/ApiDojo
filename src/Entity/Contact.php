@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Dto\User\UserDto;
 use App\Repository\ContactRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -152,6 +153,21 @@ class Contact
     public function setPostalCode(string $postalCode): self
     {
         $this->postalCode = $postalCode;
+
+        return $this;
+    }
+
+    public function setDataFromDto(UserDto $dto): self
+    {
+        $this->name = $dto->name;
+        $this->lastName = $dto->lastName;
+        $this->email = $dto->email;
+        $this->phoneNumber = $dto->phoneNumber;
+        $this->address = $dto->address;
+        $this->state = $dto->state;
+        $this->city = $dto->city;
+        $this->country = $dto->country;
+        $this->postalCode = $dto->postalCode;
 
         return $this;
     }

@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Dto\User\UserDto;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -58,4 +59,14 @@ class User
 
         return $this;
     }
+
+    public function setDataFromDto(UserDto $dto): self
+    {
+        $this->username = $dto->username;
+        $this->password = $dto->password;
+
+        return $this;
+    }
+
+
 }

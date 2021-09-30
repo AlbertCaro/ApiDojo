@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Dto\Author\AuthorDto;
 use App\Repository\AuthorRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -84,6 +85,7 @@ class Author
     public function setDateOfDeath($dateOfDeath): self
     {
         $this->dateOfDeath = $dateOfDeath;
+
         return $this;
     }
 
@@ -99,6 +101,16 @@ class Author
 
             $book->setAuthor($this);
         }
+
+        return $this;
+    }
+
+    public function setDataFromDto(AuthorDto $dto): self
+    {
+        $this->fullName = $dto->fullName;
+        $this->birthday = $dto->birthday;
+        $this->dateOfDeath = $dto->dateOfDeath;
+        $this->nationality = $dto->nationality;
 
         return $this;
     }
