@@ -1,0 +1,64 @@
+version: '3.7'
+
+services:
+  database:
+    image: percona:5.7.35
+    expose:
+      - 3306
+    command:
+      - mysqld
+    environment:
+      - MYSQL_USER=${DATABASE_USER:-symfony}
+      - MYSQL_PASSWORD=${DATABASE_PASSWORD:-symfony}
+      - MYSQL_ROOT_PASSWORD=${DATABASE_ROOT_PASSWORD:-secret}
+    ports:
+      - "33061:3306"
+    volumes:
+      - ./docker/mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  php:
+    build:
+      context: ./docker/php
+      args:
+        # Avoid problems with permissions of shared files between the container and the host under development
+        USER_ID: 1000
+        GROUP_ID: 1000
+        USERNAME: user
+    depends_on:
+      - database
+    environment:
+      XDEBUG_CONFIG: >-
+        remote_enable=1
+        client_host=host.docker.internal
+        start_with_request=yes
+      XDEBUG_MODE: debug,develop
+      PHP_IDE_CONFIG: serverName=xdebug
+      APP_ENV: ${APP_ENV}
+      APP_SECRET: ${APP_SECRET}
+      DATABASE_URL: mysql://${DATABASE_USER}:${DATABASE_PASSWORD}@database:3306/${DATABASE_NAME}?serverVersion=5.7
+    volumes:
+      - .:/var/www
+    working_dir: /var/www
+    expose:
+      - 9000
+    extra_hosts:
+      - host.docker.internal:host-gateway
+
+  nginx:
+    image: nginx:alpine
+    working_dir: /var/www
+    command: nginx
+    expose:
+      - 80
+      - 443
+    volumes:
+      - .:/var/www
+      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./docker/nginx/sites/:/etc/nginx/sites-available
+      - ./docker/nginx/conf.d/:/etc/nginx/conf.d
+    depends_on:
+      - php
+    ports:
+      - "8000:80"
+      - "4443:443"
+
