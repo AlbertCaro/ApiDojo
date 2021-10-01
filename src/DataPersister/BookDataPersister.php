@@ -3,21 +3,49 @@
 namespace App\DataPersister;
 
 use ApiPlatform\Core\DataPersister\ContextAwareDataPersisterInterface;
+use App\Dto\Book\BookDto;
+use App\Entity\Book;
+use App\Helper\BookDtoHelper;
+use Doctrine\ORM\EntityManagerInterface;
 
 class BookDataPersister implements ContextAwareDataPersisterInterface
 {
-    public function supports($data, array $context = []): bool
+    private BookDtoHelper $helper;
+
+    private EntityManagerInterface $entityManager;
+
+    public function __construct(BookDtoHelper $helper, EntityManagerInterface $entityManager)
     {
-        // TODO: Implement supports() method.
+        $this->helper = $helper;
+        $this->entityManager = $entityManager;
     }
 
-    public function persist($data, array $context = [])
+    public function supports($data, array $context = []): bool
     {
-        // TODO: Implement persist() method.
+        return $data instanceof BookDto;
+    }
+
+    public function persist($data, array $context = []): BookDto
+    {
+        $operation = $context['item_operation_name'] ?? $context['collection_operation_name'];
+
+        $book = match ($operation) {
+            'put' => $this->entityManager->find(Book::class, $data->id),
+            'post' => new Book(),
+            default => throw new \RuntimeException("Invalid HTTP method"),
+        };
+
+        return $this->helper->persist($book, $data);
     }
 
     public function remove($data, array $context = [])
     {
-        // TODO: Implement remove() method.
+        $book = $this->entityManager->find(Book::class, $data->id);
+
+        if ($book !== null) {
+            $this->entityManager->remove($book);
+
+            $this->entityManager->flush();
+        }
     }
 }

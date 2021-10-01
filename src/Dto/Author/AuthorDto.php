@@ -5,13 +5,15 @@ namespace App\Dto\Author;
 use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Entity\Author;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ApiResource(shortName: "Author")]
 class AuthorDto
 {
     #[ApiProperty(readable: false)]
-    public ?int $id;
+    public ?int $id = null;
 
+    #[Groups(["book:read"])]
     public ?string $fullName;
 
     public ?\DateTime $birthday;
@@ -30,4 +32,6 @@ class AuthorDto
             $this->nationality = $author->getNationality();
         }
     }
+
+
 }
