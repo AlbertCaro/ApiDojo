@@ -19,23 +19,23 @@ class UserDto
 
     public ?string $password;
 
-    public $name;
+    public ?string $name = null;
 
-    public $lastName;
+    public ?string $lastName = null;
 
-    public $email;
+    public ?string $email = null;
 
-    public $phoneNumber;
+    public ?string $phoneNumber = null;
 
-    public $address;
+    public ?string $address = null;
 
-    public $state;
+    public ?string $state = null;
 
-    public $city;
+    public ?string $city = null;
 
-    public $country;
+    public ?string $country = null;
 
-    public $postalCode;
+    public ?string $postalCode = null;
 
     public function __construct(User $user = null, Contact $contact = null)
     {

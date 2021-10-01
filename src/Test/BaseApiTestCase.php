@@ -20,12 +20,6 @@ use Symfony\Component\HttpKernel\KernelInterface;
 
 class BaseApiTestCase extends ApiTestCase
 {
-    const USER_FOR_TEST_TOKEN = '313632393933303036345f315fd37227402a8126d4980ec366400e76fa03812c6a';
-
-    const ADMIN_ROLE = 0;
-    const ROLE_WITHOUT_PERMISSIONS = 1;
-    const ROLE_WITH_ACCOUNTS_AND_ACCOUNTS = 2;
-
     protected Client $client;
 
     protected Generator $faker;
@@ -72,12 +66,7 @@ class BaseApiTestCase extends ApiTestCase
     {
         $this->faker = Factory::create();
 
-        $this->client = static::createClient([], [
-            'headers' => [
-                'X-AUTH-TOKEN' => self::USER_FOR_TEST_TOKEN,
-                'X-AUTH-ROLE' => self::ADMIN_ROLE
-            ]
-        ]);
+        $this->client = static::createClient([], []);
 
         // Initializing transaction to fast database recovering.
         $this->getEntityManager()->getConnection()

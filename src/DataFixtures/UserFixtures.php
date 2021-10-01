@@ -19,7 +19,7 @@ class UserFixtures extends BaseFixture implements DependentFixtureInterface
 
     public function load(ObjectManager $manager)
     {
-        for ($i = 1; $i < $this->faker->numberBetween(1, 11); $i++) {
+        for ($i = 1; $i < $this->faker->numberBetween(5, 11); $i++) {
             /** @var Contact $contact */
             $contact = $this->getReference("contact-$i");
 

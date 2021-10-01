@@ -68,5 +68,10 @@ class User
         return $this;
     }
 
+    public function getContact(): Contact
+    {
+        return $this->contact;
+    }
+
 
 }

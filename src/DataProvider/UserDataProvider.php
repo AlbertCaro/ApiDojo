@@ -8,7 +8,6 @@ use ApiPlatform\Core\DataProvider\RestrictedDataProviderInterface;
 
 class UserDataProvider implements ContextAwareCollectionDataProviderInterface, ItemDataProviderInterface, RestrictedDataProviderInterface
 {
-
     public function getCollection(string $resourceClass, string $operationName = null, array $context = [])
     {
         // TODO: Implement getCollection() method.

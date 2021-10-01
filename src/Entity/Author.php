@@ -28,7 +28,7 @@ class Author
     #[ORM\Column(type: "string", length: 255)]
     private ?string $nationality;
 
-    #[ORM\OneToMany(mappedBy: 'author', targetEntity: Book::class)]
+    #[ORM\OneToMany(mappedBy: 'author', targetEntity: Book::class, cascade: ["remove"])]
     private Collection $books;
 
     public function __construct()

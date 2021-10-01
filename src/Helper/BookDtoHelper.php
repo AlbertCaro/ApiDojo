@@ -4,5 +4,4 @@ namespace App\Helper;
 
 class BookDtoHelper
 {
-
 }
