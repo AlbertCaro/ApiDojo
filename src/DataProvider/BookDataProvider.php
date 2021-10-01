@@ -5,30 +5,21 @@ namespace App\DataProvider;
 use ApiPlatform\Core\DataProvider\ContextAwareCollectionDataProviderInterface;
 use ApiPlatform\Core\DataProvider\ItemDataProviderInterface;
 use ApiPlatform\Core\DataProvider\RestrictedDataProviderInterface;
-use App\Dto\Book\BookDto;
-use App\Helper\BookDtoHelper;
 
 class BookDataProvider implements ContextAwareCollectionDataProviderInterface, ItemDataProviderInterface, RestrictedDataProviderInterface
 {
-    private BookDtoHelper $helper;
-
-    public function __construct(BookDtoHelper $helper)
+    public function getCollection(string $resourceClass, string $operationName = null, array $context = [])
     {
-        $this->helper = $helper;
+        // TODO: Implement getCollection() method.
     }
 
-    public function getCollection(string $resourceClass, string $operationName = null, array $context = []): array
+    public function getItem(string $resourceClass, $id, string $operationName = null, array $context = [])
     {
-        return $this->helper->fetchAll();
-    }
-
-    public function getItem(string $resourceClass, $id, string $operationName = null, array $context = []): ?BookDto
-    {
-        return $this->helper->fetchOne($id);
+        // TODO: Implement getItem() method.
     }
 
     public function supports(string $resourceClass, string $operationName = null, array $context = []): bool
     {
-        return $resourceClass === BookDto::class;
+        // TODO: Implement supports() method.
     }
 }

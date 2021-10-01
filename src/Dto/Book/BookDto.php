@@ -23,8 +23,6 @@ class BookDto
 
     public ?string $genre;
 
-    public AuthorDto $author;
-
     public function __construct(Book $book = null)
     {
         if ($book) {
@@ -34,8 +32,6 @@ class BookDto
             $this->publicationDate = $book->getPublicationDate();
             $this->country = $book->getCountry();
             $this->genre = $book->getGenre();
-
-            $this->author = new AuthorDto($book->getAuthor());
         }
     }
 

@@ -13,7 +13,6 @@ class AuthorDto
     #[ApiProperty(readable: false)]
     public ?int $id = null;
 
-    #[Groups(["book:read"])]
     public ?string $fullName;
 
     public ?\DateTime $birthday;
